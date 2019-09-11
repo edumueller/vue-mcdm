@@ -10,7 +10,10 @@
   "dependencies": {
     "ahp": "^2.2.2",
     "core-js": "^2.6.5",
-    "vue": "^2.6.10"
+    "sass-loader": "^8.0.0",
+    "vue": "^2.6.10",
+    "vue-input-tag": "^2.0.6",
+    "vue-stepper": "^1.4.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
@@ -19,6 +22,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.12.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
