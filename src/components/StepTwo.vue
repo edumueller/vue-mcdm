@@ -1,42 +1,39 @@
 <template>
     <div style="padding: 2rem 3rem; text-align: left;">
         <div class="field">
-            <label class="label">Categorias</label>
+            <label class="label">Alternativas</label>
             <div class="control">
-                <input-tag v-model="form.categorias" placeholder="Escreva uma categoria e pressione enter"></input-tag>
+                <input-tag v-model="form.alternativas" placeholder="Escreva uma alternativa e pressione enter" />
             </div>
         </div>
-        <div>
-            <p>
-                Placeholder: Aqui haverá uma lista com checkbox para ativar ou desativar cada Alternativa
-            </p>
-        </div>
+<!--        <div>-->
+<!--            <p>-->
+<!--                Placeholder: Aqui haverá uma lista com checkbox para ativar ou desativar cada Alternativa-->
+<!--            </p>-->
+<!--        </div>-->
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 
 export default {
     props: ['clickedNext', 'currentStep'],
     data() {
         return {
             form: {
-                categorias: []
+                alternativas: []
             }
         }
     },
+    computed: mapState({
+        alternatives: state => state.form.alternatives
+    }),
     watch: {
         form: {
             handler: function (obj) {
-                console.log('obj')
-                console.log(obj)
-                for (let key in obj) {
-                    if (!obj.hasOwnProperty(key) || obj[key].length <= 0) {
-                        this.$emit('can-continue', {value: false})
-                        return
-                    }
-                }
-                this.$emit('can-continue', {value: true})
+                this.$store.commit({ type: 'updateForm', alternatives: obj.alternativas })
+                this.$emit('can-continue', {value: this.valid(obj)})
             },
             deep: true
         },
@@ -44,6 +41,16 @@ export default {
             if(val === true) {
                 this.$v.form.$touch();
             }
+        }
+    },
+    methods: {
+        valid(obj) {
+            for (let key in obj) {
+                if (!obj.hasOwnProperty(key) || obj[key].length <= 0) {
+                    return false
+                }
+            }
+            return true
         }
     }
 }

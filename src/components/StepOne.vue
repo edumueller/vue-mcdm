@@ -3,18 +3,19 @@
         <div class="field">
             <label class="label">Categorias</label>
             <div class="control">
-                <input-tag v-model="form.categorias" placeholder="Escreva uma categoria e pressione enter"></input-tag>
+                <input-tag v-model="form.categorias" placeholder="Escreva uma categoria e pressione enter" />
             </div>
         </div>
-        <div>
-            <p>
-                Placeholder: Aqui haverá uma lista com checkbox para ativar ou desativar cada Categoria
-            </p>
-        </div>
+<!--        <div>-->
+<!--            <p>-->
+<!--                Placeholder: Aqui haverá uma lista com checkbox para ativar ou desativar cada Categoria-->
+<!--            </p>-->
+<!--        </div>-->
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 
 export default {
     props: ['clickedNext', 'currentStep'],
@@ -25,26 +26,36 @@ export default {
             }
         }
     },
+    computed: mapState({
+        categories: state => state.form.categories,
+    }),
+    methods: {
+        valid(obj) {
+            for (let key in obj) {
+                if (!obj.hasOwnProperty(key) || obj[key].length <= 0) {
+                    return false
+                }
+            }
+            return true
+        }
+    },
     watch: {
         form: {
             handler: function (obj) {
-                console.log('obj')
-                console.log(obj)
-                for (let key in obj) {
-                    if (!obj.hasOwnProperty(key) || obj[key].length <= 0) {
-                        this.$emit('can-continue', {value: false})
-                        return
-                    }
-                }
-                this.$emit('can-continue', {value: true})
+                this.$store.commit({ type: 'updateForm', categories: obj.categorias })
+                this.$emit('can-continue', {value: this.valid(obj)})
             },
             deep: true
         },
         clickedNext(val) {
             if(val === true) {
-                this.$v.form.$touch();
+                this.$emit('can-continue', {value: this.valid(this.form)})
+                this.$emit('another-event', {value: this.form})
             }
         }
+    },
+    mounted() {
+        this.$emit('can-continue', {value: this.valid(this.form)})
     }
 }
 </script>

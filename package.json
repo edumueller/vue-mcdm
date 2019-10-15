@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "ahp": "^2.2.2",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
     "sass-loader": "^8.0.0",
     "vue": "^2.6.10",
     "vue-input-tag": "^2.0.6",

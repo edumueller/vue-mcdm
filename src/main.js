@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import App from './App.vue'
 import InputTag from 'vue-input-tag'
 import VueSlider from 'vue-slider-component'
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'vue-slider-component/theme/default.css'
 
 Vue.config.productionTip = false
@@ -16,12 +18,12 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    updateForm (state, payload) {
-      for (let k in payload) {
-      	state.form[k] = payload[k]
+      updateForm (state, payload) {
+        for (let k in payload) {
+        	state.form[k] = payload[k]
+        }
       }
     }
-  }
 })
 
 Vue.component('input-tag', InputTag)
